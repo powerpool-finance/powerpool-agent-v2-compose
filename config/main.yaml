@@ -1,0 +1,15 @@
+  networks:
+    data_source: network
+    enabled:
+      - goerli
+    details:
+      goerli:
+        rpc: 'ws://157.90.176.173:15546'
+        max_priority_fee_per_gas: 6000000
+        agents:
+          '0x3356D8E053c301F6618d48d4630A13DCb9e80b96':
+            executor: flashbots
+            keeper_id: 42
+            deployed_at: 7378792
+            accept_max_base_fee_limit: false
+            accrue_reward: false
