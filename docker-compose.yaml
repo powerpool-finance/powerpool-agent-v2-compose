@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  bot:
+    image: polipaul/agent-v2-bot:0.1
+    restart: always
+    volumes:
+      - ./config:/usr/app/config
