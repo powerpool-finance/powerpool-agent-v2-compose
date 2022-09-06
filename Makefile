@@ -3,3 +3,6 @@ up:
 
 down:
 	docker compose down
+
+pull:
+	docker compose pull
