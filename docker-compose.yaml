@@ -5,3 +5,4 @@ services:
     restart: always
     volumes:
       - ./config:/usr/app/config
+      - ./keys:/usr/app/keys
