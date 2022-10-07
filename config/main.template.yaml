@@ -1,7 +1,7 @@
   networks:
     data_source: network
     enabled:
-      - goerli
+      - mainnet
     details:
       mainnet:
         flashbots:
