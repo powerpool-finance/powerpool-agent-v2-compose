@@ -3,6 +3,20 @@
     enabled:
       - goerli
     details:
+      mainnet:
+        flashbots:
+          rpc: 'https://relay.flashbots.net'
+          address: '0x0000000000000000000000000000000000000000'
+          pass: fbPass
+        rpc: 'wss://wss-mainnet-eth.powerpool.finance'
+        agents:
+          '0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE':
+            executor: flashbots
+            keeper_address: '0x0000000000000000000000000000000000000000'
+            key_pass: 'myPass'
+            accept_max_base_fee_limit: false
+            accrue_reward: false
+
       goerli:
         rpc: 'ws://157.90.176.173:15546'
         max_priority_fee_per_gas: 6000000
