@@ -24,7 +24,7 @@ To sign as a Keeper you need to perform the following actions:
 * Clone and cd into a repo with Docker Compose file:
 
 ```sh
-git clone https://github.com/polipaul/powerpool-agent-v2-compose
+git clone https://github.com/powerpool-finance/powerpool-agent-v2-compose
 cd powerpool-agent-v2-compose
 ```
 
