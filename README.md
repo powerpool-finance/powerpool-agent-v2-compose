@@ -3,11 +3,11 @@
 ## Official PPAgentV2 deployments
 
 * Mainnet
-  * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
+  * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE" target="_blank">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
 
 ## Tools
 
-* <a href="https://eloquent-dragon-d4e0f5.netlify.app/">PP Agent V2 Stats</a> - provides detailed information about a particular `PPAgentV2` deployment by it's address.
+* <a href="https://eloquent-dragon-d4e0f5.netlify.app/" target="_blank">PP Agent V2 Stats</a> - provides detailed information about a particular `PPAgentV2` deployment by it's address.
 
 ## Requirements
 
