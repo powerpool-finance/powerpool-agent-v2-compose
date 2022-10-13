@@ -1,5 +1,14 @@
 # Instruction: Setup for the PowerPool Agent V2 Keeper.
 
+## Official PPAgentV2 deployments
+
+* Mainnet
+  * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
+
+## Tools
+
+* <a href="https://eloquent-dragon-d4e0f5.netlify.app/">PP Agent V2 Stats</a> - provides detailed information about a particular `PPAgentV2` deployment by it's address.
+
 ## Requirements
 
 * CVP (PowerPool native token) for a deposit. Each Agent contract has its own `min keeper deposit` value.
