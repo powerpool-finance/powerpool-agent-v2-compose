@@ -26,6 +26,10 @@
 
 To be a keeper, you need at least two keys. (1) One admin key for management and (2) another one for a worker. The management key function is to assign a worker's address and withdraw compensations or initial deposit. The worker key is needed for transaction signing by a bot. If you use flashbots executor, you also need a flashbot key. The flashbots key is only required for signing node's requests to flashbot RPC to keep track of your reputation. There is no need to keep any ETH on your flashbots address.
 
+| :warning: WARNING          |
+|:---------------------------|
+| We highly recommend to use flashbots executor for Ethereum `mainnet` chain. Flashbots executor does not include the failed transactions on chain thus you pay for the successfully executed txs only.      |
+
 To sign as a Keeper you need to perform the following actions:
 
 * Approve at least  minKeeperCvp  amount of CVP token from your keeper admin account to the agent's address. You can find the `minKeeperCvp` value by calling `agent.getConfig()` view method.
