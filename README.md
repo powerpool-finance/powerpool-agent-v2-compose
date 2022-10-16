@@ -72,3 +72,20 @@ docker compose down
 docker compose pull
 docker compose up -d
 ```
+
+### Watching Node Logs
+
+Logs are available with the default docker `logs` command. First, you should get your container ID with `docker ps` command.
+It will output something like:
+
+```sh
+ubuntu@home:~/powerpool-agent-v2-compose$ docker ps
+
+CONTAINER ID   IMAGE                          COMMAND                  CREATED      STATUS        PORTS     NAMES
+e8651565f365   polipaul/agent-v2-bot:latest   "docker-entrypoint.s…"   3 days ago   Up 41 hours             powerpool-agent-v2-compose-bot-1
+```
+
+Then, use one of the following commands (don't forget to replace the containter ID with your own one):
+
+* `docker logs -fn100 e8651565f365` to follow the contanter logs starting from 100 lines behind
+* `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file
