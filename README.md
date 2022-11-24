@@ -1,9 +1,13 @@
 # Instruction: Setup for the PowerPool Agent V2 Keeper.
 
 ## Official PPAgentV2 deployments
-
+#### ✅ Active
 * Mainnet
-  * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE" target="_blank">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
+  * <a href="https://etherscan.io/address/0x000000000000774D54F4064ec64bEaAdeF498Ae8" target="_blank">0x000000000000774D54F4064ec64bEaAdeF498Ae8</a> - v2.2.0
+
+#### ❌ Deprecated
+* Mainnet
+   * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE" target="_blank">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
 
 ## Tools
 
