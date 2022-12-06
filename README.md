@@ -79,13 +79,20 @@ cd ..
 docker compose up -d
 ```
 
-### Updating your bot
+### Updating your Agent node
 
 ```sh
 docker compose down
 docker compose pull
 docker compose up -d
 ```
+
+### Migrating your keeper to a new Agent V2 contract
+
+* Register as a keeper at the new contact.
+* Update contract address in a corresponding config section. Here is an example of such address in an example config: https://github.com/powerpool-finance/powerpool-agent-v2-compose/blob/a963aec71829df1ec28adec7523029ab7aec52f9/config/main.template.yaml#L13
+* If you want to use another address for a keeper worker you should update corresponding fields in the config.
+* Update your Agent node (see the instructions above).
 
 ### Watching Node Logs
 
