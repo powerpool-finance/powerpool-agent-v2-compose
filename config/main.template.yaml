@@ -1,30 +1,15 @@
   networks:
     data_source: network
     enabled:
-      - mainnet
+      - goerli
     details:
-      mainnet:
-        flashbots:
-          rpc: 'https://relay.flashbots.net'
-          address: '0x0000000000000000000000000000000000000000'
-          pass: fbPass
-        rpc: 'wss://wss-mainnet-eth.powerpool.finance'
-        agents:
-          '0x000000000000774D54F4064ec64bEaAdeF498Ae8':
-            executor: flashbots
-            keeper_address: '0x0000000000000000000000000000000000000000'
-            key_pass: 'myPass'
-            accept_max_base_fee_limit: false
-            accrue_reward: false
-
       goerli:
         rpc: 'ws://157.90.176.173:15546'
         max_priority_fee_per_gas: 6000000
         agents:
-          '0x3356D8E053c301F6618d48d4630A13DCb9e80b96':
+          '0xc6420892469D344d207c701B64e578Df39Bf0918':
             executor: pga
             keeper_address: '0x0000000000000000000000000000000000000000'
             key_pass: myPass
-            deployed_at: 7378792
             accept_max_base_fee_limit: false
             accrue_reward: false
