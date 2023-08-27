@@ -6,7 +6,7 @@
       sepolia:
         rpc: 'wss://sepolia-1.powerpool.finance'
         agents:
-          '0xc6420892469D344d207c701B64e578Df39Bf0918':
+          '0xf4583fc017D82c3462944A5d7E7aD380e5bfAD74':
             executor: pga
             keeper_worker_address: '0x0000000000000000000000000000000000000000'
             key_pass: myPass
