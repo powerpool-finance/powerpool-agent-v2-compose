@@ -1,15 +1,13 @@
   networks:
     data_source: network
     enabled:
-      - goerli
+      - sepolia
     details:
-      goerli:
-        rpc: 'ws://157.90.176.173:15546'
-        max_priority_fee_per_gas: 6000000
+      sepolia:
+        rpc: 'wss://sepolia-1.powerpool.finance'
         agents:
           '0xc6420892469D344d207c701B64e578Df39Bf0918':
             executor: pga
-            keeper_address: '0x0000000000000000000000000000000000000000'
+            keeper_worker_address: '0x0000000000000000000000000000000000000000'
             key_pass: myPass
-            accept_max_base_fee_limit: false
             accrue_reward: false
