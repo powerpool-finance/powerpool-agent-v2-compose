@@ -1,85 +1,128 @@
-# Instruction: Setup for the PowerPool Agent V2 Keeper.
+# PowerPool Agent V2 Keeper Node Docker image
+
+The node monitors on-chain events and executes jobs when required.
 
 ## Official PPAgentV2 deployments
-#### ✅ Active
-* Mainnet
-  * <a href="https://etherscan.io/address/0x000000000000774D54F4064ec64bEaAdeF498Ae8" target="_blank">0x000000000000774D54F4064ec64bEaAdeF498Ae8</a> - v2.2.0
 
-#### ❌ Deprecated
-* Mainnet
-   * <a href="https://etherscan.io/address/0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE" target="_blank">0x00000000000f02BB0c9a0fE681b589F67Cf9a5EE</a> - v2.1.0
+- Sepolia:
+  - Sepolia testnet Power Agent V2 Proxy contract - <a href="https://sepolia.etherscan.io/address/0xbdE2Aed54521000DC033B67FB522034e0F93A7e5" target="_blank">0xbdE2Aed54521000DC033B67FB522034e0F93A7e5</a>.
+  - Sepolia testnet Power Agent V2 Implementation contract - <a href="https://sepolia.etherscan.io/address/0x4dea5ec11e1eb6ff7fa62eed2fa72a1ae2934e89" target="_blank">0x4dea5ec11e1eb6ff7fa62eed2fa72a1ae2934e89</a>.
+  - Sepolia testnet Power Agent V2 Lens contract - <a href="https://sepolia.etherscan.io/address/0x937991108511f1850bd476b9ab56433afde7c92a" target="_blank">0x937991108511f1850bd476b9ab56433afde7c92a</a>.
+  - Sepolia testnet Power Agent V2 subgraph - <a href="https://api.studio.thegraph.com/query/48711/ppav2-rd-sepolia-b12-ui/version/latest">api.studio.thegraph.com</a>.
 
-## Tools
+- Gnosis chain:
+  - Gnosis chain Power Agent V2 Lens contract - <a href="https://gnosisscan.io/address/0xa39bCa92537de3922B7a874143101C398Ef7DeC9">0xa39bCa92537de3922B7a874143101C398Ef7DeC9</a>.
 
-* <a href="https://eloquent-dragon-d4e0f5.netlify.app/" target="_blank">PP Agent V2 Stats</a> - provides detailed information about a particular `PPAgentV2` deployment by it's address.
+To see active Power Agent V2 deployments, go to <a href="https://app.powerpool.finance/#/sepolia/ppv2/agents-contracts" target="_blank">app.powerpool.finance</a>.
 
-## Requirements
+## Creating a Keeper and setting up a node using docker image
 
-* CVP (PowerPool native token) for a deposit. Each Agent contract has its own `min keeper deposit` value.
-* An RPC node with WebSockets enabled. Note that at the current stage of development, the bot is tested only with standalone nodes and doesn't support RPC endpoints from cloud providers like QuickNode, Alchemy, Infura, etc., due to requests per second limits.
-* A server, available 24/7. Minimal requirements are 1CPU/512MB RAM/1G HDD. This bot script works fine at a DigitalOcean 1CPU/1GB/25SSD instance, which costs only $6 at the time of writing.
+### Signing up as a Keeper
 
-## Glossary
-
-* `Agent` - PPAgentV2 contract instance. There could be multiple deployed contract instances within a single network.
-* `Keeper` - An actor who registered a pair of admin and worker keys identified by a numerical keeper ID.
-
-## Getting Started
-
-### Signing up as a keeper
-
-To be a keeper, you need at least two keys. (1) One admin key for management and (2) another one for a worker. The management key function is to assign a worker's address and withdraw compensations or initial deposit. The worker key is needed for transaction signing by a bot. If you use flashbots executor, you also need a flashbot key. The flashbots key is only required for signing node's requests to flashbot RPC to keep track of your reputation. There is no need to keep any ETH on your flashbots address.
-
-| :warning: WARNING          |
-|:---------------------------|
-| We highly recommend to use flashbots executor for Ethereum `mainnet` chain. Flashbots executor does not include the failed transactions on chain thus you pay for the successfully executed txs only.      |
+To be a keeper, you need at least two keys. (1) One admin key for management and (2) another one for a worker. The management key function is to assign a worker's address and withdraw compensations or initial deposit. The worker key is needed for transaction signing by a node. 
 
 To sign as a Keeper you need to perform the following actions:
 
-* Approve at least  minKeeperCvp  amount of CVP token from your keeper admin account to the agent's address. You can find the `minKeeperCvp` value by calling `agent.getConfig()` view method.
-* Execute `agent.registerAsKeeper(address worker_, uint256 initialDepositAmount_)` from your keeper admin account. After execution you will receive a keeperID (uint256). KeeperID is used to get your keeper info with `agent.getKeeper(youKeeperId)` and isn't used for further configuration steps .
+#### 1. Open Power Agent dApp
+Go to <a href="https://app.powerpool.finance/#/sepolia/ppv2/agents-contracts" target="_blank">app.powerpool.finance</a>. Here, you can see all available Power Agent contracts for the selected network and click the `Create Keeper` button.
+<img width="1713" alt="Screenshot 2023-10-10 at 13 38 21" src="https://github.com/powerpool-finance/powerpool-agent-v2-node/assets/69249251/0cb6b280-85a2-475c-9953-69cd0d4cba49">
+#### 2. Create your Keeper
+In the pop-up modal window, the Admin address will be set automatically to the connected wallet. Manually fill in the Worker address and the CVP stake amount, ensuring it's above the minimum level. Your CVP stake determines the compensation the Keeper receives and their ability to be assigned a job. Sign the approval transaction and then create a Keeper.
+<img width="1715" alt="Screenshot 2023-10-10 at 13 39 45" src="https://github.com/powerpool-finance/powerpool-agent-v2-node/assets/69249251/3d454889-3915-4ad7-9757-163e50c2e886">
+#### 3. Check My Keepers
+You will see all your created keepers in the My Keepers section. 
+⚠️ Attention! You have created a Keeper that is not active. Please do not activate it now.
+<img width="1712" alt="Screenshot 2023-10-10 at 13 18 27" src="https://github.com/powerpool-finance/powerpool-agent-v2-node/assets/69249251/3c025888-e04b-4bc5-b146-fe87b3afb152">
+### Setting up a Power Agent node using docker image
 
-### Setting up a bot
-* Install docker if it isn't installed yet. For ex. for Ubuntu you can find the instructions here https://docs.docker.com/engine/install/ubuntu/.
-
-* Clone and cd into a repo with Docker Compose file:
-
+* Install Docker if it hasn't been installed yet. For example, you can find the instructions for Ubuntu here: https://docs.docker.com/engine/install/ubuntu/.
+* Clone this repository:
 ```sh
 git clone https://github.com/powerpool-finance/powerpool-agent-v2-compose
 cd powerpool-agent-v2-compose
 ```
+* Place a JSON file containing your worker key into the `./keys` folder. You can choose any filename. If you don't yet have a JSON key file, you can use the JSON key generator from this repository. To convert your raw private key to the JSON V3 format, use the following syntax:
 
-* Put a json file containing your worker key into `./keys` folder. The file name doesn't matter, and you can choose it freely. If you don't have a json key file yet, you can use the json key generator from the compose repository. The generator is written in JavaScript, so you need to have node.js installed to use it. Don't forget to install npm dependencies using `npm i'. Use the following syntax to convert your raw private key to json V3 format:
   ```sh
   # node jsongen.js <your-private-key> <your-pass>
+  yarn
   node jsongen.js 0x0c38f1fb1b2d49ea6c6d255a6e50edf0a7a7fa217639281fe1b24a96efc16995 myPass
   ```
-* If you use flashbots executor do the same for your flashbots key.
-* Cd into `config` folder and copy the main config template:
+
+* Copy the main config template:
 
 ```sh
-cd config && cp main.template.yaml main.yaml
+cp config/main.template.yaml main.yaml
 ```
+* Edit `main.yaml` using nano, vim or any other editor. 
+* You can edit `main.yaml` file and add as many networks and agents as you need. However, at the current stage, it's highly recommended to use only one Network and Power Agent contract.
+* Enter your WebSockets RPC node URI in `networks->details->{network_name}->rpc`. The example config might include some RPC nodes, either public ones or those maintained by PowerPool. However, we cannot guarantee that they will operate flawlessly with excellent uptime. To achieve better uptime, it is highly recommended to use your own personal RPC.
 
-* You can configure as many networks and agents as you need. The official PPAgentV2 list will be published later.
-* Put you WebSockets RPC node URI to `networks->details->{network_name}->rpc`. The example config could contain some RPC nodes, either public ones or maintained by PowerPool, but we don't give any guarantee they will work properly with excellent uptime.
-* For each agent contract address (`networks->details->{network_name}->agents->{agent_address}`):
-    * Choose either `pga` or `flashbots` executor. At the moment `flashbots` executor is supported only for `goerli` and `mainnet` networks.
-    * Put your keeper worker address into `keeper_address`
-    * Put your keeper worker json key pass into `key_pass`
-    * If you want to accrue rewards on your balance at the PPAgentV2 contract (this could save small amount of gas), set `accrue_reward` to `true`. If set to `false` the compensation will be sent to the worker's address each time after job execution. The default value is `false`.
-    * Some jobs could have a limit for the current network `base_fee`. It could happen if a job owner is not ready to provide compensation when the gas price exceeds the initial limit. For ex. the current network `base_fee` is 15 and the job's `maxBaseFee` is 10. If you send a tx for the job execution with an `accept_max_base_fee_limit` set to false and a gas value of 16, it will revert. But if you set `accept_max_base_fee_limit` to true, the tx won't revert, but your compensation will be calculated using `min(jobMaxBaseFee, neworkFee) = min(10,15) = 10`.
-* Notice that you can't add more than one keeper for a given agent contract on a single node. If you want to setup more than one keeper, we recommend setup another node at least on a different host. Using a different RPCs or even regions are good options too.
-* Cd back to the bot folder and run a docker container:
+* For each Agent contract address (`networks->details->{network_name}->agents->{agent_address}`):
+    * Choose  `pga` executor.
+    * Put your Keeper worker address into `keeper_address`.
+    * Put your Keeper worker json key password into `key_pass`.
+    * If you wish to accrue rewards on your balance in the Power Agent contract (which could save a small amount of gas), set `accrue_reward` to `true`. If set to `false`, the compensation will be sent to the worker's address after each job execution. The default value is `false`.
+* Please note that you cannot add more than one Keeper for a given agent contract on a single node. If you wish to set up more than one Keeper, we recommend setting up another node, preferably on a different host. Using different RPCs or even different regions are also good options.
+
+* The main.yaml file should look like this example:
+
+```yaml
+networks:
+  enabled:
+    - sepolia
+  details:
+    sepolia:
+      rpc: 'wss://sepolia-1.powerpool.finance'
+      agents:
+        '0xbdE2Aed54521000DC033B67FB522034e0F93A7e5':
+          # data_source: subgraph
+          # subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-sepolia-b12-ui/version/latest
+          executor: pga
+          keeper_worker_address: '0x840ccC99c425eDCAfebb0e7ccAC022CD15Fd49Ca'
+          key_pass: 'Very%ReliablePassword292'
+          accrue_reward: false
+
+```
+* Go back and run a docker container:
 ```sh
 cd ..
-```
-
-```sh
 docker compose up -d
 ```
+<img width="1097" alt="Screenshot 2023-10-10 at 15 29 11" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/cb6cd4b2-3732-4f67-bc76-3ab361af03a9">
 
-### Updating your Agent node
+* Get container ID:
+```sh
+ubuntu@home:~/powerpool-agent-v2-compose$ docker ps
+
+CONTAINER ID   IMAGE                               COMMAND                  CREATED      STATUS         PORTS    NAMES
+e8651565f365   powerpool/power-agent-node:latest   "docker-entrypoint.s…"   3 days ago   Up 41 hours             powerpool-agent-v2-compose-agent-1
+```
+* Check logs (don't forget to change container id):
+```sh
+docker logs -f e8651565f365
+```
+Eventually, you will see the following logs in the console. Pay attention: your keeper is still disabled, so you cannot execute jobs.
+<img width="1094" alt="Screenshot 2023-10-10 at 15 28 47" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/a3f11c07-98b3-4d22-bd6b-9143017533f1">
+
+
+### Activate Keeper
+Go back to https://app.powerpool.finance/#/sepolia/ppv2/my-keepers, click the 'Complete' button, and then sign the transaction.
+<img width="1716" alt="Screenshot 2023-10-10 at 13 29 22" src="https://github.com/powerpool-finance/powerpool-agent-v2-node/assets/69249251/b673c84d-5350-433e-ac57-c22d586f425a">
+In the console, you will see that the Keeper was successfully activated. Congratulations!
+<img width="1094" alt="Screenshot 2023-10-10 at 15 41 57" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/72c455c5-90e1-4196-8913-98fe162bde7e">
+
+
+## App exit codes
+
+0. Not an actual error, but some condition when it's better to restart an entire app. Used for some event handlers.
+1. Critical errors. Should stop the app. For ex. worker address not found, can't resolve RPC, etc.
+2. Non-critical errors. Should restart the app. For ex. hanged WS endpoint connection.
+
+## Privacy
+The Power Agent node sends basic, anonymous data about transactions to the backend for debugging. This data includes gas price and when the transaction was sent and added to the block. No IP addresses are recorded.
+
+## Updating your Power Agent node
 
 ```sh
 docker compose down
@@ -87,26 +130,14 @@ docker compose pull
 docker compose up -d
 ```
 
-### Migrating your keeper to a new Agent V2 contract
+## Migrating your keeper to a new Power Agent contract
 
-* Register as a keeper at the new contact.
-* Update contract address in a corresponding config section. Here is an example of such address in an example config: https://github.com/powerpool-finance/powerpool-agent-v2-compose/blob/a963aec71829df1ec28adec7523029ab7aec52f9/config/main.template.yaml#L13
-* If you want to use another address for a keeper worker you should update corresponding fields in the config.
-* Update your Agent node (see the instructions above).
+* Register as a keeper at the new contract.
+* Update the contract address in the corresponding config section.
+* If you want to use a different address for the keeper worker, update the corresponding fields in the config.
+* Update your Power Agent node (see the instructions above).
 
-### Watching Node Logs
-
-Logs are available with the default docker `logs` command. First, you should get your container ID with `docker ps` command.
-It will output something like:
-
-```sh
-ubuntu@home:~/powerpool-agent-v2-compose$ docker ps
-
-CONTAINER ID   IMAGE                          COMMAND                  CREATED      STATUS        PORTS     NAMES
-e8651565f365   polipaul/agent-v2-bot:latest   "docker-entrypoint.s…"   3 days ago   Up 41 hours             powerpool-agent-v2-compose-bot-1
-```
-
-Then, use one of the following commands (don't forget to replace the containter ID with your own one):
-
-* `docker logs -fn100 e8651565f365` to follow the contanter logs starting from 100 lines behind
-* `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file
+## Watching Power Agent Node Logs
+⚠️ Attention! Don't forget to change container id.
+* `docker logs -fn100 e8651565f365` to follow the contanter logs starting from 100 lines behind.
+* `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file.
