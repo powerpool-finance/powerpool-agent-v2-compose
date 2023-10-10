@@ -7,7 +7,7 @@ services:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
   agent:
-    image: powerpool-finance/powerpool-agent-v2-node:latest
+    image: powerpool/power-agent-node:latest
     restart: always
     volumes:
       - ./config:/usr/app/config
