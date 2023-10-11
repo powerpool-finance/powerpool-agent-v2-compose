@@ -97,9 +97,9 @@ networks:
     gnosis:
       rpc: 'wss://gnosis-1.powerpool.finance'
       agents:
-        '0xbdE2Aed54521000DC033B67FB522034e0F93A7e5':
+        '0x071412e301C2087A4DAA055CF4aFa2683cE1e499':
           # data_source: subgraph
-          # subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-sepolia-b12-ui/version/latest
+          # subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-gnosis-b12-ui/version/latest
           executor: pga
           keeper_worker_address: '0x840ccC99c425eDCAfebb0e7ccAC022CD15Fd49Ca'
           key_pass: 'Very%ReliablePassword292'
