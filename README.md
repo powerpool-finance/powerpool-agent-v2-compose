@@ -5,7 +5,7 @@ The node monitors on-chain events and executes jobs when required.
 ## Official PPAgentV2 deployments
 
 - Sepolia test contracts:
-  - Sepolia testnet Power Agent V2 Proxy Admin contract - <a href="https://sepolia.etherscan.io/address/0x3a779286E14EFcAD664D20023C2CE0209486fF9c" target="_blank">0x3a779286E14EFcAD664D20023C2CE0209486fF9c</a>. 
+  - Sepolia testnet Power Agent V2 Proxy Admin contract - <a href="https://sepolia.etherscan.io/address/0xa084eb73fab2fbdc4e86a3bbf1d29bc18bf6ab55" target="_blank">0xa084eb73fab2fbdc4e86a3bbf1d29bc18bf6ab55</a>. 
   - Sepolia testnet Power Agent V2 Proxy contract - <a href="https://sepolia.etherscan.io/address/0xbdE2Aed54521000DC033B67FB522034e0F93A7e5" target="_blank">0xbdE2Aed54521000DC033B67FB522034e0F93A7e5</a>.
   - Sepolia testnet Power Agent V2 Implementation contract - <a href="https://sepolia.etherscan.io/address/0xaE32C29AfE1eB46B4fCa7E5f77e95217eF987332" target="_blank">0xaE32C29AfE1eB46B4fCa7E5f77e95217eF987332</a>.
   - Sepolia testnet Power Agent V2 Lens contract - <a href="https://sepolia.etherscan.io/address/0x937991108511f1850bd476b9ab56433afde7c92a" target="_blank">0x937991108511f1850bd476b9ab56433afde7c92a</a>.
