@@ -16,6 +16,13 @@ The node monitors on-chain events and executes jobs when required.
   - Gnosis chain Power Agent V2 Lens contract - <a href="https://gnosisscan.io/address/0x2b3d29daa9f41c4171416af3d66f5a2ae210616e">0x2b3d29daa9f41c4171416af3d66f5a2ae210616e</a>.
   - Gnosis chain test Power Agent V2 subgraph - <a href="https://api.studio.thegraph.com/query/48711/ppav2-rd-gnosis-b12-ui/version/latest">api.studio.thegraph.com</a>.
 
+- Ethereum mainnet test contracts:
+  - Ethereum mainnet test Power Agent V2 Proxy Admin contract - <a href="https://etherscan.io/address/0x96c1AA4E6eD3a0579C78038Da7e4A17A19A72106" target="_blank">0x96c1AA4E6eD3a0579C78038Da7e4A17A19A72106</a>.
+  - Ethereum mainnet test Power Agent V2 Proxy contract - <a href="https://etherscan.io/address/0xc9ce4CdA5897707546F3904C0FfCC6e429bC4546" target="_blank">0xc9ce4CdA5897707546F3904C0FfCC6e429bC4546</a>.
+  - Ethereum mainnet test Power Agent V2 Implementation contract - <a href="https://etherscan.io/address/0x31779098cf5da5e16e4b74cef8608aeac216eda3" target="_blank">0x31779098cf5da5e16e4b74cef8608aeac216eda3</a>.
+  - Ethereum mainnet Power Agent V2 Lens contract - <a href="https://etherscan.io/address/0xbB8dAC006c8B6F67c4bc2563b64ed669Faa54F07" target="_blank">0xbB8dAC006c8B6F67c4bc2563b64ed669Faa54F07</a>.
+  - Ethereum mainnet test Power Agent V2 subgraph - <a href="https://api.studio.thegraph.com/query/48711/ppav2-rd-maintest-ui/version/latest">api.studio.thegraph.com</a>.
+
 To see active Power Agent V2 deployments, go to <a href="https://app.powerpool.finance/#/sepolia/ppv2/agents-contracts" target="_blank">app.powerpool.finance</a>.
 
 ## Creating a Keeper and setting up a node using docker image
@@ -79,8 +86,8 @@ networks:
       rpc: 'wss://sepolia-1.powerpool.finance'
       agents:
         '0xbdE2Aed54521000DC033B67FB522034e0F93A7e5':
-          # data_source: subgraph
-          # subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-sepolia-b12-ui/version/latest
+          data_source: subgraph
+          subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-sepolia-b12-ui/version/latest
           executor: pga
           keeper_worker_address: '0x840ccC99c425eDCAfebb0e7ccAC022CD15Fd49Ca'
           key_pass: 'Very%ReliablePassword292'
@@ -98,14 +105,33 @@ networks:
       rpc: 'wss://gnosis-1.powerpool.finance'
       agents:
         '0x071412e301C2087A4DAA055CF4aFa2683cE1e499':
-          # data_source: subgraph
-          # subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-gnosis-b12-ui/version/latest
+          data_source: subgraph
+          subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-gnosis-b12-ui/version/latest
           executor: pga
           keeper_worker_address: '0x840ccC99c425eDCAfebb0e7ccAC022CD15Fd49Ca'
           key_pass: 'Very%ReliablePassword292'
           accrue_reward: false
 
 ```
+* The main.yaml file should look like this example for Ethereum mainnet:
+
+```yaml
+networks:
+  enabled:
+    - mainnet
+  details:
+    mainnet:
+      rpc: 'wss://mainnet-1.powerpool.finance'
+      agents:
+        '0xc9ce4CdA5897707546F3904C0FfCC6e429bC4546':
+          data_source: subgraph
+          subgraph_url: https://api.studio.thegraph.com/query/48711/ppav2-rd-gnosis-b12-ui/version/latest
+          executor: pga
+          keeper_worker_address: '0x840ccC99c425eDCAfebb0e7ccAC022CD15Fd49Ca'
+          key_pass: 'Very%ReliablePassword292'
+          accrue_reward: false
+```
+
 * Go back and run a docker container:
 ```sh
 cd ..
@@ -142,7 +168,7 @@ In the console, you will see that the Keeper was successfully activated. Congrat
 2. Non-critical errors. Should restart the app. For ex. hanged WS endpoint connection.
 
 ## Privacy
-The Power Agent node sends basic, anonymous data about transactions to the backend for debugging. This data includes gas price and when the transaction was sent and added to the block. No IP addresses are recorded.
+The Power Agent node sends basic, anonymous data about transactions to the backend for debugging.
 
 ## Updating your Power Agent node
 
