@@ -190,3 +190,9 @@ docker compose up -d
 ⚠️ Attention! Don't forget to change container id.
 * `docker logs -fn100 e8651565f365` to follow the contanter logs starting from 100 lines behind.
 * `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file.
+
+## Run Keeper in Dev Mode with Additional Logging Levels
+
+```sh
+NODE_ENV=dev docker compose up -d
+```

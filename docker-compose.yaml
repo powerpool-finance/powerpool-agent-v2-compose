@@ -6,3 +6,5 @@ services:
     volumes:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
+    environment:
+      NODE_ENV: ${NODE_ENV}
