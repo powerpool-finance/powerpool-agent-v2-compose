@@ -194,5 +194,5 @@ docker compose up -d
 ## Run Keeper in Dev Mode with Additional Logging Levels
 
 ```sh
-TAG=dev docker compose up -d
+NODE_ENV=dev docker compose up -d
 ```
