@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   agent:
-    image: powerpool/power-agent-node:latest
+    image: powerpool/power-agent-node:${TAG:-latest}
     restart: always
     volumes:
       - ./config:/usr/app/config
