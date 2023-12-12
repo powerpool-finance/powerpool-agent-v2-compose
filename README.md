@@ -136,7 +136,7 @@ networks:
 * Go back and run a docker container:
 ```sh
 cd ..
-docker compose up -d
+docker compose up -d agent-latest
 ```
 <img width="1097" alt="Screenshot 2023-10-10 at 15 29 11" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/cb6cd4b2-3732-4f67-bc76-3ab361af03a9">
 
@@ -175,8 +175,8 @@ The Power Agent node sends basic, anonymous data about transactions to the backe
 
 ```sh
 docker compose down
-docker compose pull
-docker compose up -d
+docker compose pull agent-latest
+docker compose up -d agent-latest
 ```
 
 ## Migrating your keeper to a new Power Agent contract
@@ -192,7 +192,14 @@ docker compose up -d
 * `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file.
 
 ## Run Keeper in Dev Mode with Additional Logging Levels
-
+Run Keeper in development mode with enhanced logging:
 ```sh
-NODE_ENV=dev docker compose up -d
+NODE_ENV=dev docker compose up -d agent-latest
+```
+This sets the environment to development, increasing log detail, and runs the container in the background.
+## Run the Power Agent Node Container with the 'dev' Tag
+Run the Power Agent Node with the 'dev' tag for development and testing. This version includes the latest updates not in the stable release.
+```sh
+docker compose pull agent-dev
+NODE_ENV=dev docker compose up -d agent-dev
 ```

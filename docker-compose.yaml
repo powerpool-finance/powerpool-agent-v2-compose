@@ -1,7 +1,15 @@
 version: "3.9"
 services:
-  agent:
+  agent-latest:
     image: powerpool/power-agent-node:latest
+    restart: always
+    volumes:
+      - ./config:/usr/app/config
+      - ./keys:/usr/app/keys
+    environment:
+      NODE_ENV: ${NODE_ENV}
+  agent-dev:
+    image: powerpool/power-agent-node:dev
     restart: always
     volumes:
       - ./config:/usr/app/config
