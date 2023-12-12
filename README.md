@@ -194,7 +194,7 @@ docker compose up -d agent-latest
 ## Run Keeper in Dev Mode with Additional Logging Levels
 Run Keeper in development mode with enhanced logging:
 ```sh
-NODE_ENV=dev docker compose up -d
+NODE_ENV=dev docker compose up -d agent-latest
 ```
 This sets the environment to development, increasing log detail, and runs the container in the background.
 ## Run the Power Agent Node Container with the 'dev' Tag
