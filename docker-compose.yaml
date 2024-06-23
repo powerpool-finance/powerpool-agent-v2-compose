@@ -28,7 +28,6 @@ services:
     profiles: [dev]
 
   offchain-service:
-    container_name: offchain-service
     image: powerpool/power-agent-offchain-service:latest
     restart: always
     volumes:
