@@ -136,20 +136,21 @@ networks:
 * Go back and run a docker container:
 ```sh
 cd ..
-docker compose up -d agent-latest
+docker compose --profile latest up -d
 ```
 <img width="1097" alt="Screenshot 2023-10-10 at 15 29 11" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/cb6cd4b2-3732-4f67-bc76-3ab361af03a9">
 
 * Get container ID:
 ```sh
-ubuntu@home:~/powerpool-agent-v2-compose$ docker ps
+ubuntu@home:~/powerpool-agent-v2-compose$ docker compose ps
 
-CONTAINER ID   IMAGE                               COMMAND                  CREATED      STATUS         PORTS    NAMES
-e8651565f365   powerpool/power-agent-node:latest   "docker-entrypoint.s…"   3 days ago   Up 41 hours             powerpool-agent-v2-compose-agent-1
+NAME                                            IMAGE                                           COMMAND                  SERVICE            CREATED        STATUS        PORTS
+powerpool-agent-v2-compose-agent-latest-1       powerpool/power-agent-node:latest               "./docker-entrypoint…"   agent-latest       21 hours ago   Up 21 hours   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp
+powerpool-agent-v2-compose-offchain-service-1   powerpool/power-agent-offchain-service:latest   "docker-entrypoint.s…"   offchain-service   21 hours ago   Up 21 hours   3423/tcp, 0.0.0.0:3424->3424/tcp, :::3424->3424/tcp
 ```
-* Check logs (don't forget to change container id):
+* Check logs (use SERVICE name):
 ```sh
-docker logs -f e8651565f365
+docker compose logs agent-latest -f
 ```
 Eventually, you will see the following logs in the console. Pay attention: your keeper is still disabled, so you cannot execute jobs.
 <img width="1094" alt="Screenshot 2023-10-10 at 15 28 47" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/a3f11c07-98b3-4d22-bd6b-9143017533f1">
@@ -174,9 +175,9 @@ The Power Agent node sends basic, anonymous data about transactions to the backe
 ## Updating your Power Agent node
 
 ```sh
-docker compose down
-docker compose pull agent-latest
-docker compose up -d agent-latest
+docker compose --profile latest down
+git pull && docker compose pull
+docker compose --profile latest up -d
 ```
 
 ## Migrating your keeper to a new Power Agent contract
@@ -192,14 +193,14 @@ docker compose up -d agent-latest
 * `docker logs e8651565f365 > out.txt` to save all the container logs to `out.txt` file.
 
 ## Run Keeper in Dev Mode with Additional Logging Levels
-Run Keeper in development mode with enhanced logging:
+Run Keeper in development mode with enhanced logging or specific api ports:
 ```sh
-NODE_ENV=dev docker compose up -d agent-latest
+NODE_ENV=dev NODE_API_PORT=8199 OFFCHAIN_API_PORT=3424 docker compose --profile latest up -d
 ```
 This sets the environment to development, increasing log detail, and runs the container in the background.
 ## Run the Power Agent Node Container with the 'dev' Tag
 Run the Power Agent Node with the 'dev' tag for development and testing. This version includes the latest updates not in the stable release.
 ```sh
-docker compose pull agent-dev
-NODE_ENV=dev docker compose up -d agent-dev
+docker compose pull
+NODE_ENV=dev docker compose --profile dev up -d
 ```
