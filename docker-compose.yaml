@@ -8,10 +8,10 @@ services:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
     ports:
-      - "8099:8099"
+      - "${NODE_API_PORT:-8099}:${NODE_API_PORT:-8099}"
     environment:
       NODE_ENV: ${NODE_ENV}
-      API_PORT: 8099
+      API_PORT: ${NODE_API_PORT:-8099}
     profiles: [latest]
 
   agent-dev:
@@ -21,14 +21,14 @@ services:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
     ports:
-      - "8099:8099"
+      - "${NODE_API_PORT:-8099}:${NODE_API_PORT:-8099}"
     environment:
       NODE_ENV: ${NODE_ENV}
-      API_PORT: 8099
+      API_PORT: ${NODE_API_PORT:-8099}
+      OFFCHAIN_SERVICE_ENDPOINT: http://offchain-service:${OFFCHAIN_API_PORT:-3423}
     profiles: [dev]
 
   offchain-service:
-    container_name: offchain-service
     image: powerpool/power-agent-offchain-service:latest
     restart: always
     volumes:
@@ -36,9 +36,9 @@ services:
       - ./scriptToExecute:/scriptToExecute
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "3423:3423"
+      - "${OFFCHAIN_API_PORT:-3423}:${OFFCHAIN_API_PORT:-3423}"
     environment:
-      AGENT_API_HOST: http://localhost:8099
+      AGENT_API_HOST: http://localhost:${NODE_API_PORT:-8099}
       DOCKER_MODE: 1
     profiles: [latest, dev]
 
