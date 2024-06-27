@@ -12,6 +12,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
       API_PORT: ${NODE_API_PORT:-8099}
+      OFFCHAIN_SERVICE_ENDPOINT: http://offchain-service:${OFFCHAIN_API_PORT:-3423}
     profiles: [latest]
 
   agent-dev:
@@ -40,7 +41,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV}
       API_PORT: ${OFFCHAIN_API_PORT:-3423}
-      AGENT_API_PORT: ${AGENT_API_PORT:-8099}
+      AGENT_API_PORT: ${NODE_API_PORT:-8099}
       DOCKER_MODE: 1
     profiles: [latest, dev]
 
