@@ -42,7 +42,7 @@ services:
       NODE_ENV: ${NODE_ENV}
       API_PORT: ${OFFCHAIN_API_PORT:-3423}
       AGENT_API_PORT: ${NODE_API_PORT:-8099}
-      DOCKER_MODE: 1
+      COMPOSE_MODE: 1
       MAX_EXECUTION_TIME: ${OFFCHAIN_MAX_EXECUTION_TIME}
     profiles: [latest, dev]
 
