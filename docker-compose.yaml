@@ -4,6 +4,8 @@ services:
   agent-latest:
     image: powerpool/power-agent-node:latest
     restart: always
+    networks:
+      - default
     volumes:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
@@ -18,6 +20,8 @@ services:
   agent-dev:
     image: powerpool/power-agent-node:dev
     restart: always
+    networks:
+      - default
     volumes:
       - ./config:/usr/app/config
       - ./keys:/usr/app/keys
@@ -32,6 +36,12 @@ services:
   offchain-service:
     image: powerpool/power-agent-offchain-service:latest
     restart: always
+    networks:
+      - default
+      - ipfs_net
+    depends_on:
+      - ipfs
+      - temp-executor
     volumes:
       - ./scriptsFetched:/scriptsFetched
       - ./scriptToExecute:/scriptToExecute
@@ -46,5 +56,29 @@ services:
       MAX_EXECUTION_TIME: ${OFFCHAIN_MAX_EXECUTION_TIME}
     profiles: [latest, dev]
 
+  ipfs:
+    image: ipfs/kubo:v0.29.0
+    networks:
+      ipfs_net:
+        aliases:
+          - ipfs-service
+    restart: always
+    environment:
+      - IPFS_PROFILE=server
+    entrypoint: ["/bin/sh", "-c", "ipfs init; ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001 && ipfs daemon"]
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+    volumes:
+      - "${IPFS_EXPORT:-./ipfs-export}:/export"
+      - "${IPFS_DATA:-./ipfs-data}:/data/ipfs"
+    profiles: [latest, dev]
+
   temp-executor:
     image: node:18-alpine
+
+networks:
+  ipfs_net:
+    internal: true
+  default:
+    driver: bridge

@@ -148,9 +148,13 @@ NAME                                            IMAGE                           
 powerpool-agent-v2-compose-agent-latest-1       powerpool/power-agent-node:latest               "./docker-entrypoint…"   agent-latest       21 hours ago   Up 21 hours   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp
 powerpool-agent-v2-compose-offchain-service-1   powerpool/power-agent-offchain-service:latest   "docker-entrypoint.s…"   offchain-service   21 hours ago   Up 21 hours   3423/tcp, 0.0.0.0:3424->3424/tcp, :::3424->3424/tcp
 ```
-* Check logs (use SERVICE name):
+* Check logs (using SERVICE name):
 ```sh
 docker compose logs agent-latest -f
+```
+* Check logs (using profile):
+```sh
+docker compose --profile latest logs -f
 ```
 Eventually, you will see the following logs in the console. Pay attention: your keeper is still disabled, so you cannot execute jobs.
 <img width="1094" alt="Screenshot 2023-10-10 at 15 28 47" src="https://github.com/powerpool-finance/powerpool-agent-v2-compose/assets/69249251/a3f11c07-98b3-4d22-bd6b-9143017533f1">
