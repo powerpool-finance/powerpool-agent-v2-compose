@@ -59,6 +59,7 @@ services:
   ipfs:
     image: ipfs/kubo:v0.29.0
     networks:
+      ipfs_peers:
       ipfs_net:
         aliases:
           - ipfs-service
@@ -78,6 +79,7 @@ services:
     image: node:18-alpine
 
 networks:
+  ipfs_peers:
   ipfs_net:
     internal: true
   default:
