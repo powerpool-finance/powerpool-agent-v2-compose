@@ -66,7 +66,7 @@ services:
     restart: always
     environment:
       - IPFS_PROFILE=server
-    entrypoint: ["/bin/sh", "-c", "ipfs init; ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001 && ipfs daemon"]
+    entrypoint: ["/bin/sh", "-c", "ipfs init; ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001; ipfs daemon & echo 'ipfs daemon started.'; sleep 86400; echo 'clear & restart ipfs...'; rm -rf /data/ipfs/*; reboot"]
     ports:
       - "4001:4001"
       - "5001:5001"
